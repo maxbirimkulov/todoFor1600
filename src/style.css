@@ -1,0 +1,147 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.todo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px;
+    height: 500px;
+    background-color: slategray;
+    padding: 30px 25px;
+}
+
+.todo__add{
+    width: 100%;
+    display: flex;
+    column-gap: 15px;
+}
+
+.todo__add-input, .todo__add-select{
+    width: 100%;
+    height: 100%;
+}
+
+.todo__left{
+    width: 70%;
+    height: 50px;
+    background-color: orange;
+    position: relative;
+}
+
+.todo__add-btn{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background-color: slateblue;
+    color: white;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+.todo__right{
+    background-color: slateblue;
+    width: 30%;
+    height: 50px;
+}
+
+.todo__menu{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    margin-top: 20px;
+}
+
+.todo__list{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+}
+
+.todo__list-left{
+    display: flex;
+    align-items: flex-start;
+    column-gap: 10px;
+}
+
+.todo__list-option{
+    cursor: pointer;
+    line-height: 3px;
+
+}
+
+.todo__list-options{
+    display: none;
+}
+
+.todo__list-options.active{
+    display: flex;
+    row-gap: 7px;
+    list-style-type: none;
+    flex-direction: column;
+    font-size: 11px;
+    padding: 10px;
+    position: absolute;
+    top: 15px;
+    right: -7px;
+    border-radius: 3px;
+    background-color: skyblue;
+    z-index: 5;
+}
+
+.todo__list-options.active::before{
+    content: '';
+    position: absolute;
+    top: -9px;
+    right: 7px;
+    width: 10px;
+    height: 10px;
+    clip-path: polygon(49% 31%, 0% 100%, 100% 100%);
+    background-color: skyblue;
+
+}
+
+.todo__list-options-item{
+    display: flex;
+    column-gap: 10px;
+    cursor: pointer;
+}
+
+.todo__list-options-item:hover{
+    color: red;
+}
+
+.todo__list-textarea{
+    resize: none;
+}
+.todo__list-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.todo__list-memo{
+    font-size: 12px;
+    color: #00000070;
+}
+
+
+
+
+
+
+
+
+
+
+
