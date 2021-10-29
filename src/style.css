@@ -69,6 +69,14 @@
 
 }
 
+#last{
+    padding-bottom: 10px;
+    border-bottom: 1px solid white;
+}
+.todo__list.pin{
+    order: -1;
+}
+
 .todo__list-left{
     display: flex;
     align-items: flex-start;
@@ -135,6 +143,20 @@
     color: #00000070;
 }
 
+.todo__list-memo-textarea{
+    resize: none;
+    height: 20px;
+    outline: none;
+}
+
+.todo__list-pin{
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    left: -5px;
+    color: red;
+    transform: translate(-100%, -10% ) rotate(-45deg);
+}
 
 
 
