@@ -1,14 +1,36 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
+import * as THREE from 'three'
+import NET from 'vanta/dist/vanta.net.min'
 import './style.css'
 import Add from "./components/Add/Add";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faThumbtack, faStickyNote, faEdit, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
+import DeleteCompleted from "./components/DeleteCompleted/DeleteCompleted";
+import TodoList from "./components/TodoList/TodoList";
 
 
 
 function App() {
     const [todoArr, setTodoArr] = useState([]);
     const [todo, setTodo] = useState('');
+    const [status, setStatus] = useState('all');
+
+    const [vantaEffect, setVantaEffect] = useState(0);
+    const myRef = useRef(null);
+    useEffect(() => {
+        if (!vantaEffect) {
+            setVantaEffect(NET({
+                el: myRef.current,
+                THREE: THREE,
+                color: 0x7d00f2,
+                backgroundColor: 0x0,
+                points: 9.00,
+                maxDistance: 28.00,
+                spacing: 14.00
+            }))
+        }
+        return () => {
+            if (vantaEffect) vantaEffect.destroy()
+        }
+    }, [vantaEffect]);
 
     let date = new Date();
     let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -20,146 +42,30 @@ function App() {
         }).format(new Date(date))
     };
 
-    const handlerComplete = (id) => {
-        setTodoArr(todoArr.map((item, idx) => {
-            if (item.id === id) {
-                return {...item, isCompleted: !item.isCompleted}
-            } else {
-                return {...item, option: false}
-            }
-        }))
-    };
-
-    const handlerOption = (id) => {
-        setTodoArr(todoArr.map((item) => {
-            if (item.id === id) {
-                return {...item, option: !item.option, addMemo: false, isChange: false}
-            } else {
-                return {...item, option: false}
-            }
-        }))
-    };
-
-    const handlerEdit = (id) => {
-        setTodoArr(todoArr.map((item) => {
-            if (item.id === id) {
-                return {...item, isChange: !item.isChange, addMemo:false}
-            } else {
-                return item
-            }
-        }))
-    };
-
-
-    const handlerDelete = (id) => {
-        setTodoArr(todoArr.filter((item) => {
-            return item.id !== id
-        }))
-    };
-
-    const handlerMemo = (id) => {
-        setTodoArr(todoArr.map((item, idx) => {
-            if (item.id === id) {
-                return {...item, addMemo: !item.addMemo, isChange:false}
-            } else {
-                return item
-            }
-        }))
-    };
-
-    const handlerPin = (id) => {
-        setTodoArr(todoArr.map((item,idx)=>{
-            if (item.id === id){
-                return {...item, pin: !item.pin, option: false}
-            } else{
-                return item
-            }
-        }))
-    };
-    const last = todoArr.length !== 0 ? todoArr.filter((item)=> item.pin).reduce((acc, rec)=>{
-        return rec
-    },{}) : '';
-
     return (
-        <div className="App">
+        <>
+            <div className='vanta' ref={myRef}>
+            </div>
+        <div className="App" >
             <div className="todo">
                 <div>
-                    <p>{weekDays[date.getDay()]}</p>
-                    <p>{toDate(date)}</p>
+                    <p className='todo__days'>{weekDays[date.getDay()]}</p>
+                    <p className='todo__date'>{toDate(date)}</p>
                 </div>
-                <Add todo={todo} setTodo={setTodo} setTodoArr={setTodoArr} todoArr={todoArr}/>
-                <ul className='todo__menu'>
-                    {todoArr.map((item, idx, array) => {
-                        return (
-                            <li
-                                id={last.id === item.id ? 'last': ''}
+                <Add status={status} setStatus={setStatus} todo={todo} setTodo={setTodo} setTodoArr={setTodoArr} todoArr={todoArr}/>
 
-                                className={`todo__list ${item.pin ? 'pin' : ''}`}
-                                key={item.id}>
-
-                                {item.pin
-                                ? <span className='todo__list-pin'> <FontAwesomeIcon icon={faThumbtack}/></span>
-                                : ''
-                                }
-                                <div className='todo__list-left'>
-                                    <input className='todo__list-input' type="checkbox" checked={item.isCompleted}
-                                           onChange={() => handlerComplete(item.id)}/>
-                                    <div className='todo__list-text'>
-                                        {item.isChange
-                                            ?
-                                            <textarea id='changeName' className='todo__list-textarea' maxLength={30} onChange={(e) => {
-                                                item.name = e.target.value
-                                            }}>{item.name}</textarea>
-                                            : <span className='todo__list-name'>{item.name}</span>
-                                        }
-
-                                        {item.addMemo
-                                            ? <textarea className='todo__list-memo-textarea' id='changeMemo' onChange={(e)=>{
-                                                item.memo = e.target.value
-                                            }}>{item.memo}</textarea>
-                                            : <span className='todo__list-memo'>{item.memo}</span>
-                                        }
-                                    </div>
-                                </div>
-                                <p className='todo__list-option' onClick={() => handlerOption(item.id)}>...</p>
-                                <ul className={`todo__list-options ${item.option ? 'active' : ''}`}>
-                                    <li className='todo__list-options-item' onClick={()=> handlerPin(item.id)}>
-                                        <FontAwesomeIcon icon={faThumbtack}/>
-                                        {item.pin
-                                        ? 'Unpin'
-                                        : 'Pin on the top'
-                                        }
-                                    </li>
-
-                                    <li className='todo__list-options-item' onClick={() => handlerMemo(item.id)}>
-                                        <FontAwesomeIcon icon={faStickyNote}/>
-                                        {item.addMemo
-                                        ? 'Save'
-                                        : item.memo.length !== 0
-                                            ? 'Edit memo'
-                                            : 'Add a memo'
-                                        }
-                                    </li>
-
-                                    <li className='todo__list-options-item' onClick={() => handlerEdit(item.id)}>
-                                        <FontAwesomeIcon icon={faEdit}/>
-                                        {item.isChange
-                                            ? 'Save'
-                                            : 'Edit'
-                                        }
-                                    </li>
-
-                                    <li className='todo__list-options-item' onClick={() => handlerDelete(item.id)}>
-                                        <FontAwesomeIcon icon={faTrashAlt}/>
-                                        Delete
-                                    </li>
-                                </ul>
-                            </li>
-                        )
-                    })}
-                </ul>
+                {todoArr.length === 0 && status === 'all'
+                    ? <p className='todo__tasks'>Здесь будут ваши задания</p>
+                    : todoArr.filter( item => item.isCompleted).length === 0 && status === 'completed'
+                        ? <p className='todo__tasks'>Здесь будут ваши выполненные задания</p>
+                        : todoArr.filter( item => !item.isCompleted).length === 0 && status === 'active'
+                            ? <p className='todo__tasks'>Здесь будут ваши активные задания</p>
+                    : <TodoList todoArr={todoArr} setTodoArr={setTodoArr} status={status}/>
+                }
+                <DeleteCompleted todoArr={todoArr} setTodoArr={setTodoArr}/>
             </div>
         </div>
+            </>
     );
 }
 
