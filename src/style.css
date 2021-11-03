@@ -38,6 +38,46 @@
     height: 100%;
 }
 
+.todo__add-input::placeholder{
+    color: #7d00f2;
+}
+
+.todo__add-input:disabled::placeholder{
+    color: white;
+}
+
+.todo__add-select{
+    outline-color:  #7d00f2;
+    color:#7d00f2 ;
+    font-size: 13px;
+    text-transform: capitalize;
+    letter-spacing: .8px;
+    padding-left: 5px;
+}
+
+.todo__add-select option{
+    padding: 10px 5px;
+    background-color: #7d00f2;
+    color: white;
+    transition: 1s;
+}
+.todo__add-select option:hover{
+    transition: 1s;
+    color: #7d00f2;
+    background-color: white;
+}
+.todo__add-input{
+    padding-left: 15px;
+    color:#7d00f2 ;
+    font-size: 14px;
+    letter-spacing: .5px;
+    outline-color:  #7d00f2;
+}
+.todo__add-input:disabled{
+    background-color: #7d00f2;
+
+}
+
 .todo__left{
     width: 70%;
     height: 50px;
@@ -124,11 +164,11 @@
     padding: 10px;
     position: absolute;
     top: 15px;
-    right: -7px;
+    right: 0;
     border-radius: 3px;
     color: white;
     background-color: #7d00f2;
-    z-index: 5;
+    z-index: 10;
 }
 
 .todo__days{
@@ -149,11 +189,12 @@
     content: '';
     position: absolute;
     top: -9px;
-    right: 7px;
+    right: 3px;
     width: 10px;
     height: 10px;
     clip-path: polygon(49% 31%, 0% 100%, 100% 100%);
-    background-color: skyblue;
+    background-color: #7d00f2;
+    z-index: 10;
 
 }
 
@@ -177,7 +218,7 @@
 
 .todo__list-memo{
     font-size: 12px;
-    color: #00000070;
+    color: white;
 }
 
 .todo__list-memo-textarea{
@@ -188,11 +229,11 @@
 
 .todo__list-pin{
     position: absolute;
-    top: 0;
+    top: 50%;
     font-size: 14px;
     left: -5px;
     color: red;
-    transform: translate(-100%, -10% ) rotate(-45deg);
+    transform: translate(-100%, -90% ) rotate(-45deg);
 }
 
 .vanta {

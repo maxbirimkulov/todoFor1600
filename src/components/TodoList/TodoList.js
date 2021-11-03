@@ -77,16 +77,16 @@ const TodoList = ({todoArr, setTodoArr, status}) => {
                             <div className='todo__list-text'>
                                 {item.isChange
                                     ?
-                                    <textarea id='changeName' className='todo__list-textarea' maxLength={30} onChange={(e) => {
+                                    <textarea defaultValue={item.name} id='changeName' className='todo__list-textarea' maxLength={30} onChange={(e) => {
                                         item.name = e.target.value
-                                    }}>{item.name}</textarea>
+                                    }}/>
                                     : <span className={`todo__list-name ${item.isCompleted ? 'complete': ''}`}>{item.name}</span>
                                 }
 
                                 {item.addMemo
-                                    ? <textarea className='todo__list-memo-textarea' id='changeMemo' onChange={(e)=>{
+                                    ? <textarea defaultValue={item.memo} className='todo__list-memo-textarea' id='changeMemo' onChange={(e)=>{
                                         item.memo = e.target.value
-                                    }}>{item.memo}</textarea>
+                                    }}/>
                                     : <span className='todo__list-memo'>{item.memo}</span>
                                 }
                             </div>

@@ -1,6 +1,6 @@
 
 
-const Add = ({setStatus, todo, setTodo, setTodoArr, todoArr}) => {
+const Add = ({status, setStatus, todo, setTodo, setTodoArr, todoArr}) => {
     const addTodo = (e) => {
         e.preventDefault();
         setTodoArr([...todoArr, {
@@ -24,15 +24,15 @@ const Add = ({setStatus, todo, setTodo, setTodoArr, todoArr}) => {
 
     return (
         <div className='todo__add'>
-            <form className='todo__left' onSubmit={addTodo}>
+            <form className='todo__left' onSubmit={addTodo} >
                 <label>
-                    <input className='todo__add-input' maxLength={30} value={todo} type="text" onChange={handlerAdd} required/>
+                    <input placeholder={status === 'completed' ? 'Заблокировано' : 'Введите задание'} disabled={status === 'completed'} className='todo__add-input' maxLength={30} value={todo} type="text" onChange={handlerAdd} required/>
                 </label>
-                <button type='submit' className='todo__add-btn' >+</button>
+                <button disabled={status === 'completed'} type='submit' className='todo__add-btn' >+</button>
             </form>
 
             <div className='todo__right'>
-                <select defaultValue={'all'} className='todo__add-select' onChange={(e)=> setStatus(e.target.value) }>
+                <select value={status} className='todo__add-select' onChange={(e)=> setStatus(e.target.value) }>
                     <option value='all' > all</option>
                     <option value='completed'> completed</option>
                     <option value='active'> active</option>

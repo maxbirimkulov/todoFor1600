@@ -42,6 +42,25 @@ function App() {
         }).format(new Date(date))
     };
 
+    useEffect(()=>{
+        if (localStorage.getItem('status') !== null){
+            setStatus(localStorage.getItem('status'))
+        }
+
+        if (localStorage.getItem('todo') !== null){
+            setTodoArr(JSON.parse(localStorage.getItem('todo')));
+        }
+    },[]);
+
+
+    useEffect(()=>{
+        localStorage.setItem('todo', JSON.stringify(todoArr));
+    },[todoArr]);
+
+    useEffect(()=>{
+        localStorage.setItem('status', status)
+    },[status]);
+
     return (
         <>
             <div className='vanta' ref={myRef}>
